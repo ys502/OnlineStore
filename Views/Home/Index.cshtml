@@ -1,0 +1,511 @@
+﻿@{
+    ViewData["Title"] = "المتجر الإلكتروني";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #f5f6fa;
+        direction: rtl;
+    }
+
+    .store-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 30px 20px;
+    }
+
+    /* الهيدر */
+    .store-header {
+        background: white;
+        border-radius: 18px;
+        padding: 20px 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .store-name {
+        font-size: 28px;
+        font-weight: bold;
+        color: #222;
+        white-space: nowrap;
+    }
+
+    .search-box {
+        flex: 1;
+        max-width: 500px;
+        position: relative;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 14px 20px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .search-box input:focus {
+        border-color: #4f46e5;
+    }
+
+    .cart-button {
+        border: none;
+        background: #4f46e5;
+        color: white;
+        padding: 13px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .cart-button:hover {
+        background: #3730a3;
+    }
+
+    /* الترحيب */
+    .hero {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        border-radius: 20px;
+        padding: 45px 30px;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    /* المنتجات */
+    .section-title {
+        font-size: 26px;
+        margin-bottom: 20px;
+        color: #222;
+    }
+
+    .products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        transition: 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .product-image {
+        height: 200px;
+        background: #eef0ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 75px;
+    }
+
+    .product-info {
+        padding: 20px;
+    }
+
+    .product-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .product-description {
+        color: #777;
+        margin-bottom: 15px;
+    }
+
+    .product-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .price {
+        color: #4f46e5;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .add-button {
+        border: none;
+        background: #4f46e5;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .add-button:hover {
+        background: #3730a3;
+    }
+
+    /* الجوال */
+    @@media (max-width: 800px) {
+        .store-header {
+            flex-direction: column;
+        }
+
+        .search-box {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .products {
+            grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+<div class="store-container">
+
+    <!-- رأس المتجر -->
+    <header class="store-header">
+
+        <div class="store-name">
+    🛍️ يوسف المزيد
+         </div>
+
+        <div class="search-box">
+            <input type="text"
+                   id="searchInput"
+                   placeholder="ابحث عن منتج..." />
+        </div>
+
+        <button class="cart-button" onclick="showCart()">
+            🛒 السلة (<span id="cartCount">0</span>)
+        </button>
+
+    </header>
+
+    <!-- الترحيب -->
+    <section class="hero">
+        <h1>مرحباً بك في متجرنا</h1>
+        <p>اكتشف منتجاتنا واختر ما يناسبك</p>
+    </section>
+
+    <!-- المنتجات -->
+    <h2 class="section-title">المنتجات</h2>
+
+    <div class="products" id="products">
+
+        <!-- المنتج الأول -->
+        <div class="product-card" data-name="سماعات لاسلكية">
+
+            <div class="product-image">
+                🎧
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    سماعات لاسلكية
+                </div>
+
+                <div class="product-description">
+                    سماعات بجودة صوت عالية
+                </div>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        99 ريال
+                    </span>
+
+                    <button class="add-button"
+                           onclick="addToCart('سماعات لاسلكية', 99)">
+                        أضف للسلة
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج الثاني -->
+        <div class="product-card" data-name="ساعة ذكية">
+
+            <div class="product-image">
+                ⌚
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    ساعة ذكية
+                </div>
+
+                <div class="product-description">
+                    ساعة ذكية بتصميم عصري
+                </div>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        149 ريال
+                    </span>
+
+                    <button class="add-button"
+                           onclick="addToCart('ساعة ذكية', 149)">
+                        أضف للسلة
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج الثالث -->
+        <div class="product-card" data-name="حقيبة ظهر">
+
+            <div class="product-image">
+                🎒
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    حقيبة ظهر
+                </div>
+
+                <div class="product-description">
+                    حقيبة عملية للاستخدام اليومي
+                </div>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        79 ريال
+                    </span>
+
+                    <button class="add-button"
+                            onclick="addToCart('حقيبة ظهر', 79)">
+                        أضف للسلة
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج الرابع -->
+        <div class="product-card" data-name="كيبورد">
+
+            <div class="product-image">
+                ⌨️
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    لوحة مفاتيح
+                </div>
+
+                <div class="product-description">
+                    لوحة مفاتيح مريحة وعملية
+                </div>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        129 ريال
+                    </span>
+
+                    <button class="add-button"
+                           onclick="addToCart('لوحة مفاتيح', 129)">
+                        أضف للسلة
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج الخامس -->
+        <div class="product-card" data-name="ماوس لاسلكي">
+
+            <div class="product-image">
+                🖱️
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    ماوس لاسلكي
+                </div>
+
+                <div class="product-description">
+                    ماوس سريع ومريح للاستخدام
+                </div>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        59 ريال
+                    </span>
+
+                    <button class="add-button"
+                            onclick="addToCart('ماوس لاسلكي', 59)">
+                        أضف للسلة
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج السادس -->
+        <div class="product-card" data-name="شاحن سريع">
+
+            <div class="product-image">
+                🔌
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    شاحن سريع
+                </div>
+
+                <div class="product-description">
+                    شاحن سريع للأجهزة الذكية
+                </div>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        69 ريال
+                    </span>
+
+                    <button class="add-button"
+                           onclick="addToCart('شاحن سريع', 69)">
+                        أضف للسلة
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+   let cart = [];
+
+function addToCart(productName, price) {
+
+    let existingProduct = cart.find(p => p.name === productName);
+
+    if (existingProduct) {
+        existingProduct.quantity++;
+    } else {
+        cart.push({
+            name: productName,
+            price: price,
+            quantity: 1
+        });
+    }
+
+    updateCartCount();
+
+    alert("تمت إضافة " + productName + " إلى السلة 🛒");
+}
+
+function updateCartCount() {
+
+    let count = 0;
+
+    cart.forEach(product => {
+        count += product.quantity;
+    });
+
+    document.getElementById("cartCount").textContent = count;
+}
+
+function showCart() {
+
+    if (cart.length === 0) {
+        alert("السلة فارغة 🛒");
+        return;
+    }
+
+    let message = "🛒 السلة:\n\n";
+    let total = 0;
+
+    cart.forEach((product, index) => {
+
+        let productTotal = product.price * product.quantity;
+
+        message +=
+            (index + 1) + ". " +
+            product.name +
+            " × " +
+            product.quantity +
+            " = " +
+            productTotal +
+            " ريال\n";
+
+        total += productTotal;
+    });
+
+    message += "\n----------------\n";
+    message += "💰 الإجمالي: " + total + " ريال";
+
+    message += "\n\nلحذف منتج اكتب رقمه في السلة.";
+
+    let choice = prompt(message);
+
+    if (choice !== null) {
+
+        let index = parseInt(choice) - 1;
+
+        if (index >= 0 && index < cart.length) {
+
+            cart.splice(index, 1);
+
+            updateCartCount();
+
+            alert("تم حذف المنتج من السلة 🗑️");
+        }
+    }
+}
+</script>
